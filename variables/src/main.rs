@@ -51,6 +51,9 @@ union U {
     u: u32,
     v: u64
 }
+unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+    std::slice::from_raw_parts((p as *const T) as *const u8, std::mem::size_of::<T>(),)
+}
 
 fn test3() {
     println!("test3 ....");
@@ -61,10 +64,31 @@ fn test3() {
     println!("N: {:?}", std::mem::size_of::<N>());
     println!("E: {:?}", std::mem::size_of::<E>());
     println!("U: {:?}", std::mem::size_of::<U>());
+
+    let b = B(1, 1.1, '3');
+    let bytes: &[u8] = unsafe{ any_as_u8_slice(&b)};
+    println!(">>>: {:?}", bytes);
+}
+
+fn test4() {
+    let v = vec![1, 2, 3];
+    for i in v {
+        println!("{:?}", i);
+    }
+}
+
+fn test5() {
+    let a = Some("hello".to_string());
+    match a {
+        Some(s) => println!("{:?}", s),
+        _ => println!("{:?}", a)
+    }
 }
 
 fn main() {
     test1();    
     test2();
     test3();
+    test4();
+    test5();
 }
