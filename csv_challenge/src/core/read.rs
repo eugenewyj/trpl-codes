@@ -1,3 +1,16 @@
+/// # 用例：
+/// ```
+/// use std::path::PathBuf;
+/// use csv_challenge::{
+///     {load_csv, write_csv},
+///     replace_column,
+/// };
+/// let filename = PathBuf::from("./input/challenge.csv");
+/// let csv_data = load_csv(filename).unwrap();
+/// let modified_data = replace_column(csv_data, "City", "Beijing").unwrap();
+/// let output_file = write_csv(&modified_data, &Some("output/test.csv".to_string()));
+/// assert!(output_file.is_ok());
+/// ```
 use super::{Error, PathBuf, File, Read, Write};
 
 pub fn load_csv(csv_file: PathBuf) -> Result<String, Error> {
