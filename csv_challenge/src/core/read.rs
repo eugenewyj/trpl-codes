@@ -38,3 +38,16 @@ fn write(data: &str, out_file_name: &Option<String>) -> Result<(), Error> {
     
     Ok(())
 }
+
+#[cfg(test)]
+mod test {
+    use std::path::PathBuf;
+    use super::load_csv;
+
+    #[test]
+    fn test_valid_load_csv() {
+        let filename = PathBuf::from("./input/challenge.csv");
+        let csv_data = load_csv(filename);
+        assert!(csv_data.is_ok());
+    }
+}
